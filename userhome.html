@@ -15,8 +15,8 @@
         function query(){
             var val = $("#query").val();
             // alert('val is '+val);
-            $.get("/query", function(data, status){
-                
+            $.get("/query?val="+val, function(data, status){
+                console.log('response is '+data);
              });
         }
     </script>

@@ -3,6 +3,7 @@ var express = require('express');
 var session = require('express-session');
 var bodyParser = require('body-parser');
 var path = require('path');
+var queryJS = require('./query');
 
 var connection = mysql.createConnection({
 	host     : '192.168.49.104',
@@ -63,7 +64,10 @@ app.get('/home', function(request, response) {
 });
 
 app.get('/query', function(request, response) {
-	console.log('query val is ');
+	const param = request.query.val;
+	console.log('query val is '+param);
+	const result = queryJS.myFunc1();
+	console.log('result is '+result);
 });
 
-app.listen(3000);
+app.listen(3001);
