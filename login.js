@@ -20,6 +20,9 @@ app.use(session({
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());
 
+app.set('view engine', 'jade');
+app.engine('jade', require('jade').__express); 
+
 app.get('/', function(request, response) {
 	response.sendFile(path.join(__dirname + '/login.html'));
 });
@@ -35,10 +38,11 @@ app.post('/auth', function(request, response) {
 				request.session.loggedin = true;
 				request.session.username = username;
 				response.redirect('/home');
+				// response.sendFile('userhome.html', {root: __dirname });
 			} else {
 				response.send('Incorrect Username and/or Password!');
 			}			
-			response.end();
+			// response.end();
 		});
 	} else {
 		response.send('Please enter Username and Password!');
@@ -48,12 +52,14 @@ app.post('/auth', function(request, response) {
 
 app.get('/home', function(request, response) {
 	if (request.session.loggedin) {
-		response.send('Welcome back, ' + request.session.username + '!');
-//		response.sendFile(path.join(__dirname + '/home.html'));
+		// response.send('Welcome back, ' + request.session.username + '!');
+		 console.log('it is here');
+		// response.sendFile(path.join(__dirname +'/'+ 'userhome.html'));
+		response.sendFile('userhome.html', {root: __dirname });
 	} else {
 		response.send('Please login to view this page!');
 	}
-	response.end();
+	// response.end();
 });
 
 app.listen(3000);
