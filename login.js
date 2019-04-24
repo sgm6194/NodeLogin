@@ -62,4 +62,8 @@ app.get('/home', function(request, response) {
 	// response.end();
 });
 
+app.get('/query', function(request, response) {
+	console.log('query val is ');
+});
+
 app.listen(3000);
