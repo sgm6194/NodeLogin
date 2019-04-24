@@ -9,14 +9,30 @@
 </head>
 <body>
     <input type="text" id="query">
-    <button onclick="query()">query</button>
+    <button onclick="query()">has amount of</button>
+    <h3>Transact here</h3>
+    <input type="text" id="val1"> is transfering <input type="number" id="transact"> rupees to 
+    <input type="text" id="val2">
     
+    <button onclick="transact()">transact</button>
     <script>
         function query(){
             var val = $("#query").val();
             // alert('val is '+val);
             $.get("/query?val="+val, function(data, status){
-                console.log('response is '+data);
+                // console.log('response is '+data);
+                alert(JSON.parse(data));
+             });
+        }
+        function transact(){
+            var val1 = $("#val1").val();
+            var val2 = $("#val2").val();
+            var transact = $("#transact").val();
+            // alert('val is '+val);
+            $.get("/transact?val1="+val1+"&val2="+val2+"&transact="+transact, function(data, status){
+                // console.log('response is '+data);
+                // alert('Value for transact is '+JSON.parse(data));
+                alert("Transfer successfully");
              });
         }
     </script>

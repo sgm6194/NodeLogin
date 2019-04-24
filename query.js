@@ -8,9 +8,10 @@ const ccpPath = path.resolve(__dirname, '/home/user/workspace/github/fabric-samp
 const ccpJSON = fs.readFileSync(ccpPath, 'utf8');
 const ccp = JSON.parse(ccpJSON);
 
-var myFunc1 = async function getQuery() {
+var myFunc1 = async function getQuery(action, param) {
+    let result = "8";
     try {
-
+        console.log('query for and action '+param+action);
         // Create a new file system based wallet for managing identities.
         // const walletPath = path.join(process.cwd(), 'wallet');
         const walletPath = "/home/user/workspace/github/fabric-samples/first-network/fabcar-2orgs/wallet";
@@ -40,10 +41,14 @@ var myFunc1 = async function getQuery() {
         // queryAllCars transaction - requires no arguments, ex: ('queryAllCars')
         // const result = await contract.evaluateTransaction('query','b');
         // const result1 = await contract.submitTransaction('invoke','a','b','10');
-        const result = await contract.evaluateTransaction('query','a');
+        if(action == 'query') result = await contract.evaluateTransaction('query',param);
+        else if(action == "transact"){
+            const result1 = await contract.submitTransaction('invoke',param.split('~')[0],param.split('~')[1],param.split('~')[2]);
+            console.log('result 1 is '+result1);
+        } 
         console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
         console.log('sending value');
-        return result;
+        return result;  
     } catch (error) {
         console.error(`Failed to evaluate transaction: ${error}`);
         process.exit(1);

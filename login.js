@@ -66,8 +66,30 @@ app.get('/home', function(request, response) {
 app.get('/query', function(request, response) {
 	const param = request.query.val;
 	console.log('query val is '+param);
-	const result = queryJS.myFunc1();
+	const result = queryJS.myFunc1("query",param).then((resp) => {
+		// console.log('query response',JSON.parse(resp));
+		// response.sendStatus(parseInt(JSON.parse(resp)));
+		response.status(200).send(resp);
+	})
+	.catch((error) => {
+		console.log('query error', error);
+	})
 	console.log('result is '+result);
 });
 
-app.listen(3001);
+app.get('/transact', function(request, response) {
+	const val1 = request.query.val1;
+	const val2 = request.query.val2;
+	const transact = request.query.transact;
+	// console.log('query val is '+param);
+	const result = queryJS.myFunc1("transact", val1+"~"+val2+"~"+transact).then((resp) => {
+		// console.log('query response',JSON.parse(resp));
+		response.sendStatus(200);
+	})
+	.catch((error) => {
+		console.log('query error', error);
+	})
+	console.log('result is '+result);
+});
+
+app.listen(3002);
